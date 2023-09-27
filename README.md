@@ -16,5 +16,4 @@ Short clip : https://drive.google.com/file/d/1im-6yOROA5Z8yyFcKxXDBylpLy3449I9/v
 - <b>Python</b> 
 - <b>Spoonacular API calls</b>
 - <b>ML/NLP</b>
-- <b>SQL</b>
 
