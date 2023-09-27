@@ -1,5 +1,5 @@
 
-# MindfulMornings 🍏
+# MindfulMornings ☯️ 🍏
 
 
 <h2>Description</h2>
