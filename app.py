@@ -74,74 +74,174 @@ gramscarb = calscarb/4
 gramspro = calspro/4
 gramsfat = calsfat/9
 
-# API call
+# API call function
 
-# def apicall():
-#     if snacksint == 0:
-#         newcalsint = calsint
-#     else: 
-#         newcalsint = calsint-(150*snacksint)
-#     params = {
-#         'apiKey': api_key,
-#         'minCalories': (newcalsint/mealint)*0.8,
-#         'maxCalories': (newcalsint/mealint)*1.2,
-#         'minCarbs': (gramscarb/mealint)*0.8,
-#         'maxCarbs': (gramscarb/mealint)*1.2,
-#         'minProtein':(gramspro/mealint)*0.8,
-#         'maxProtein':(gramspro/mealint)*1.2,
-#         'minFat':(gramsfat/mealint)*0.8,
-#         'maxFat':(gramsfat/mealint)*1.2,
-#         'diet': diet,
-#         'number': mealint,
-#         'addRecipeInformation': True}
-#     response = requests.get(base_url, params=params)
-#     datameals = response.json()
-#     params = {
-#         'apiKey': api_key,
-#         'maxCalories': 300,
-#         'diet': diet,
-#         'number': snacksint}
-#     response = requests.get(base_url, params=params)
-#     datasnacks = response.json()
-#     if snacksint == 0:
-#         data = datameals['results']
-#     else:
-#         data = datameals['results'] + datasnacks['results']
-#     st.header('Based on your targets, here is an example of your nutrition today:')
-#     for item in data:
-#         title = item['title']
-#         image_url = item['image']
-#         nutrients = item['nutrition']
-#         web = item['sourceUrl']
-#         for nutrient in nutrients['nutrients']:
-#             if nutrient['name'] == 'Calories':
-#                 calories_amount = nutrient['amount']
-#                 calories_unit = nutrient['unit']
-#             if nutrient['name'] == 'Protein':
-#                 protein_amount = nutrient['amount']
-#                 protein_unit = nutrient['unit']
-#             if nutrient['name'] == 'Carbohydrates':
-#                 carb_amount = nutrient['amount']
-#                 carb_unit = nutrient['unit']
-#             if nutrient['name'] == 'Fat':
-#                 Fat_amount = nutrient['amount']
-#                 Fat_unit = nutrient['unit']
+def apicall():
+    if snacksint == 0:
+        newcalsint = calsint
+    else: 
+        newcalsint = calsint-(150*snacksint)
+    params = {
+        'apiKey': api_key,
+        'minCalories': (newcalsint/mealint)*0.8,
+        'maxCalories': (newcalsint/mealint)*1.2,
+        'minCarbs': (gramscarb/mealint)*0.8,
+        'maxCarbs': (gramscarb/mealint)*1.2,
+        'minProtein':(gramspro/mealint)*0.8,
+        'maxProtein':(gramspro/mealint)*1.2,
+        'minFat':(gramsfat/mealint)*0.8,
+        'maxFat':(gramsfat/mealint)*1.2,
+        'diet': diet,
+        'number': mealint,
+        'addRecipeInformation': True}
+    response = requests.get(base_url, params=params)
+    datameals = response.json()
+    params = {
+        'apiKey': api_key,
+        'maxCalories': 300,
+        'diet': diet,
+        'number': snacksint}
+    response = requests.get(base_url, params=params)
+    datasnacks = response.json()
+    if snacksint == 0:
+        data = datameals['results']
+    else:
+        data = datameals['results'] + datasnacks['results']
+    st.header('Based on your targets, here is an example of your nutrition today:')
+    for item in data:
+        title = item['title']
+        image_url = item['image']
+        nutrients = item['nutrition']
+        web = item['sourceUrl']
+        for nutrient in nutrients['nutrients']:
+            if nutrient['name'] == 'Calories':
+                calories_amount = nutrient['amount']
+                calories_unit = nutrient['unit']
+            if nutrient['name'] == 'Protein':
+                protein_amount = nutrient['amount']
+                protein_unit = nutrient['unit']
+            if nutrient['name'] == 'Carbohydrates':
+                carb_amount = nutrient['amount']
+                carb_unit = nutrient['unit']
+            if nutrient['name'] == 'Fat':
+                Fat_amount = nutrient['amount']
+                Fat_unit = nutrient['unit']
 
-#         col8,col9 = st.columns(2)
-#         with col8:
-#             st.subheader(title)
-#             st.image(image_url)
-#         with col9:
-#             st.write('')
-#             st.write('')
-#             st.write('')
-#             st.write('')
-#             st.write(f"Calories: {calories_amount} {calories_unit}")
-#             st.write(f"Protein: {protein_amount} {protein_unit}")
-#             st.write(f"Carbohydrates: {carb_amount} {carb_unit}")
-#             st.write(f"Fat: {Fat_amount} {Fat_unit}")
-#             st.write(web)
+        col8,col9 = st.columns(2)
+        with col8:
+            st.subheader(title)
+            st.image(image_url)
+        with col9:
+            st.write('')
+            st.write('')
+            st.write('')
+            st.write('')
+            st.write(f"Calories: {calories_amount} {calories_unit}")
+            st.write(f"Protein: {protein_amount} {protein_unit}")
+            st.write(f"Carbohydrates: {carb_amount} {carb_unit}")
+            st.write(f"Fat: {Fat_amount} {Fat_unit}")
+            st.write(web)
           
+
+#back to streamlit. displaying data from the API call if generate button clicked
+
+if button_clicked == True:
+    if diet == 'None':
+        data = nonedata
+#cals = '2200'
+# meals = '3'
+# snacks = '2'
+# carb ='30'
+# pro= '40'
+# fat = '30'
+# diet = 'none'
+    if diet == 'Vegetarian':
+        data = vegedata
+# cals = '2750'
+# meals = '3'
+# snacks = '2'
+# carb ='50'
+# pro= '25'
+# fat = '25'
+# diet = 'vegetarian'
+    if diet == 'Pescetarian':
+# cals = '1800'
+# meals = '2'
+# snacks = '0'
+# carb ='40'
+# pro= '30'
+# fat = '30'
+# diet = 'pescetarian'
+        data = pescdata
+    if diet == 'Primal':
+        data = primaldata
+    for item in data:
+        title = item['title']
+        image_url = item['image']
+        nutrients = item['nutrition']
+        web = item['sourceUrl']
+        for nutrient in nutrients['nutrients']:
+            if nutrient['name'] == 'Calories':
+                calories_amount = nutrient['amount']
+                calories_unit = nutrient['unit']
+            if nutrient['name'] == 'Protein':
+                protein_amount = nutrient['amount']
+                protein_unit = nutrient['unit']
+            if nutrient['name'] == 'Carbohydrates':
+                carb_amount = nutrient['amount']
+                carb_unit = nutrient['unit']
+            if nutrient['name'] == 'Fat':
+                Fat_amount = nutrient['amount']
+                Fat_unit = nutrient['unit']
+
+        col8,col9 = st.columns(2)
+        with col8:
+            st.subheader(title)
+            st.image(image_url)
+        with col9:
+            st.write('')
+            st.write('')
+            st.write('')
+            st.write('')
+            st.write(f"Calories: {calories_amount} {calories_unit}")
+            st.write(f"Protein: {protein_amount} {protein_unit}")
+            st.write(f"Carbohydrates: {carb_amount} {carb_unit}")
+            st.write(f"Fat: {Fat_amount} {Fat_unit}")
+            st.write(web)
+
+st.write('---')
+
+#sentiment analysis of feelings from user input using vaderSentiment analyser
+
+st.header('How you feel is an important factor in achieving your nutritional targets')
+feels=st.text_input('How do you feel?')
+submit = st.button('Submit')
+
+if submit:
+    #preprocessing and tokenisation
+    tokens = word_tokenize(feels)
+    tokens = [word for word in tokens if word.isalnum()]
+    tokenstring = ' '.join(tokens)
+    #sentiment analysis
+    analyzer = SentimentIntensityAnalyzer()
+    sentiment = analyzer.polarity_scores(tokenstring)
+    if sentiment['compound'] >= 0.05:
+        sentiment_label = "Positive"
+        st.image('https://t3.ftcdn.net/jpg/01/12/43/90/360_F_112439016_DkgjEftsYWLvlYtyl7gVJo1H9ik7wu1z.jpg', width = 100)
+        st.text('Based on your input, you are experiencing a positive mindset. Be mindful of how you are feeling and think about the image below')
+        st.image('https://everydaypower.com/wp-content/uploads/2022/09/Positive-thinking-quotes-and-sayings-that-will-make-your-day.png', width=400)
+    elif sentiment['compound'] <= -0.05:
+        sentiment_label = "Negative"
+        st.image('https://as2.ftcdn.net/v2/jpg/02/47/49/03/1000_F_247490337_m1YtErlSYWIzh8Zc05VDwYnM5sHojstL.jpg', width = 100)
+        st.text('Based on your input, you are experiencing a negative mindset. Be mindful of how you are feeling and think about the image below')
+        st.image('https://www.inclusionbarnet.org.uk/wp-content/uploads/2022/05/inspirational-motivational-quote.jpg', width=400)
+    else:
+        sentiment_label = "Neutral"
+        st.image('https://i.pinimg.com/originals/5b/65/33/5b65338283540e07e6f0b56a6c45b1dd.jpg', width = 100)
+        st.text('Based on your input, you are experiencing a neutral mindset. Be mindful of how you are feeling and think about the image below')
+        st.image('https://i.pinimg.com/originals/a2/9f/36/a29f36573dceae79f87523372e627bcd.jpg', width=400)
+
+
 
 # preloaded API call data for purposes of the demonstration (mimicks API call)
 
@@ -2555,103 +2655,3 @@ pescdata=[{'vegetarian': False,
     {'name': 'Protein', 'amount': 51.746, 'unit': 'g'},
     {'name': 'Fat', 'amount': 14.4646, 'unit': 'g'},
     {'name': 'Carbohydrates', 'amount': 88.918, 'unit': 'g'}]}}]
-
-
-#back to streamlit. displaying data from the API call if generate button clicked
-
-if button_clicked == True:
-    if diet == 'None':
-        data = nonedata
-#cals = '2200'
-# meals = '3'
-# snacks = '2'
-# carb ='30'
-# pro= '40'
-# fat = '30'
-# diet = 'none'
-    if diet == 'Vegetarian':
-        data = vegedata
-# cals = '2750'
-# meals = '3'
-# snacks = '2'
-# carb ='50'
-# pro= '25'
-# fat = '25'
-# diet = 'vegetarian'
-    if diet == 'Pescetarian':
-# cals = '1800'
-# meals = '2'
-# snacks = '0'
-# carb ='40'
-# pro= '30'
-# fat = '30'
-# diet = 'pescetarian'
-        data = pescdata
-    if diet == 'Primal':
-        data = primaldata
-    for item in data:
-        title = item['title']
-        image_url = item['image']
-        nutrients = item['nutrition']
-        web = item['sourceUrl']
-        for nutrient in nutrients['nutrients']:
-            if nutrient['name'] == 'Calories':
-                calories_amount = nutrient['amount']
-                calories_unit = nutrient['unit']
-            if nutrient['name'] == 'Protein':
-                protein_amount = nutrient['amount']
-                protein_unit = nutrient['unit']
-            if nutrient['name'] == 'Carbohydrates':
-                carb_amount = nutrient['amount']
-                carb_unit = nutrient['unit']
-            if nutrient['name'] == 'Fat':
-                Fat_amount = nutrient['amount']
-                Fat_unit = nutrient['unit']
-
-        col8,col9 = st.columns(2)
-        with col8:
-            st.subheader(title)
-            st.image(image_url)
-        with col9:
-            st.write('')
-            st.write('')
-            st.write('')
-            st.write('')
-            st.write(f"Calories: {calories_amount} {calories_unit}")
-            st.write(f"Protein: {protein_amount} {protein_unit}")
-            st.write(f"Carbohydrates: {carb_amount} {carb_unit}")
-            st.write(f"Fat: {Fat_amount} {Fat_unit}")
-            st.write(web)
-
-st.write('---')
-
-#sentiment analysis of feelings from user input using vaderSentiment analyser
-
-st.header('How you feel is an important factor in achieving your nutritional targets')
-feels=st.text_input('How do you feel?')
-submit = st.button('Submit')
-
-if submit:
-    #preprocessing and tokenisation
-    tokens = word_tokenize(feels)
-    tokens = [word for word in tokens if word.isalnum()]
-    tokenstring = ' '.join(tokens)
-    #sentiment analysis
-    analyzer = SentimentIntensityAnalyzer()
-    sentiment = analyzer.polarity_scores(tokenstring)
-    if sentiment['compound'] >= 0.05:
-        sentiment_label = "Positive"
-        st.image('https://t3.ftcdn.net/jpg/01/12/43/90/360_F_112439016_DkgjEftsYWLvlYtyl7gVJo1H9ik7wu1z.jpg', width = 100)
-        st.text('Based on your input, you are experiencing a positive mindset. Be mindful of how you are feeling and think about the image below')
-        st.image('https://everydaypower.com/wp-content/uploads/2022/09/Positive-thinking-quotes-and-sayings-that-will-make-your-day.png', width=400)
-    elif sentiment['compound'] <= -0.05:
-        sentiment_label = "Negative"
-        st.image('https://as2.ftcdn.net/v2/jpg/02/47/49/03/1000_F_247490337_m1YtErlSYWIzh8Zc05VDwYnM5sHojstL.jpg', width = 100)
-        st.text('Based on your input, you are experiencing a negative mindset. Be mindful of how you are feeling and think about the image below')
-        st.image('https://www.inclusionbarnet.org.uk/wp-content/uploads/2022/05/inspirational-motivational-quote.jpg', width=400)
-    else:
-        sentiment_label = "Neutral"
-        st.image('https://i.pinimg.com/originals/5b/65/33/5b65338283540e07e6f0b56a6c45b1dd.jpg', width = 100)
-        st.text('Based on your input, you are experiencing a neutral mindset. Be mindful of how you are feeling and think about the image below')
-        st.image('https://i.pinimg.com/originals/a2/9f/36/a29f36573dceae79f87523372e627bcd.jpg', width=400)
-
